@@ -11,6 +11,37 @@ extension NSAttributedString.Key {
     static let highlight = NSAttributedString.Key(rawValue: "highlight")
 }
 
+extension NSAttributedString {
+    func attributedStringWithResizedImages(with maxWidth: CGFloat) -> NSAttributedString {
+        let text = NSMutableAttributedString(attributedString: self)
+        text.enumerateAttribute(NSAttributedString.Key.attachment, in: NSMakeRange(0, text.length), options: .init(rawValue: 0), using: { (value, range, stop) in
+            if let attachement = value as? NSTextAttachment {
+                let image = attachement.image(forBounds: attachement.bounds, textContainer: NSTextContainer(), characterIndex: range.location)!
+                if image.size.width > maxWidth {
+                    let newImage = image.resizeImage(scale: maxWidth/image.size.width)
+                    let newAttribut = NSTextAttachment()
+                    newAttribut.image = newImage
+                    text.addAttribute(NSAttributedString.Key.attachment, value: newAttribut, range: range)
+                }
+            }
+        })
+        return text
+    }
+}
+
+extension UIImage {
+    func resizeImage(scale: CGFloat) -> UIImage {
+        let newSize = CGSize(width: self.size.width*scale, height: self.size.height*scale)
+        let rect = CGRect(origin: CGPoint.zero, size: newSize)
+
+        UIGraphicsBeginImageContext(newSize)
+        self.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
+}
+
 extension NSMutableAttributedString {
     func replaceFont(with newFont: UIFont) {
         self.beginEditing()
@@ -44,8 +75,10 @@ extension NSMutableAttributedString {
 
         let range = (self.string as NSString).rangeOfCharacter(from: invertedSet, options: .backwards)
         let length = range.location == NSNotFound ? 0 : NSMaxRange(range)
-
+        var abc = NSMutableAttributedString(attributedString: self.attributedSubstring(from: NSRange(location: 0, length: length)))
+        abc = (abc.attributedStringWithResizedImages(with: 20) as? NSMutableAttributedString)!
         return NSMutableAttributedString(attributedString: self.attributedSubstring(from: NSRange(location: 0, length: length)))
+
     }
 
     func trimmingTrailingNewlines() -> NSMutableAttributedString {

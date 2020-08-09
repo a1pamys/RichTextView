@@ -88,7 +88,8 @@ class RichTextParser {
 
     func getRichTextWithErrors(from input: String) -> ParserConstants.RichTextWithErrors {
         let input = self.stripCodeTagsIfNecessary(from: input)
-        let inputAsMutableAttributedString = NSMutableAttributedString(string: input)
+        var inputAsMutableAttributedString = NSMutableAttributedString(string: input)
+        inputAsMutableAttributedString = (inputAsMutableAttributedString.attributedStringWithResizedImages(with: 375-24) as? NSMutableAttributedString)!
         let richTextWithSpecialDataTypesHandled = self.getRichTextWithSpecialDataTypesHandled(
             fromString: inputAsMutableAttributedString
         )
@@ -118,7 +119,7 @@ class RichTextParser {
                                                           specialDataTypesString: NSAttributedString,
                                                           textAttachmentAttributes: [[NSAttributedString.Key: Any]]) -> NSMutableAttributedString {
         let outputString = self.mergeTextAttachmentsAndHTMLMarkdownAttributes(
-            htmlMarkdownString: htmlMarkdownString,
+            htmlMarkdownString: (htmlMarkdownString.attributedStringWithResizedImages(with: 350) as? NSMutableAttributedString)!,
             textAttachmentAttributes: textAttachmentAttributes
         )
         let rangeOfSpecialDataString = NSRange(location: 0, length: specialDataTypesString.length)
