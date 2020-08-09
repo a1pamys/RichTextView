@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'RichTextView'
+  s.name             = 'RichTextViewArnap'
   s.version          = '2.8.3'
   s.summary          = 'iOS Text View that Properly Displays LaTeX, HTML, Markdown, and YouTube/Vimeo Links.'
   s.description      = <<-DESC
@@ -19,10 +19,10 @@ string with the relevant rich text surrounded by the appropriate tags and it wil
   - Any Vimeo videos should be represented as vimeo[y], where y is the ID of the Vimeo video
                        DESC
 
-  s.homepage         = 'https://github.com/tophat/RichTextView'
+  s.homepage         = 'https://github.com/a1pamys/RichTextView.git'
   s.license          = { :type => 'Apache-2', :file => 'LICENSE' }
   s.author           = { 'Top Hat' => 'tophat' }
-  s.source           = { :git => 'https://github.com/tophat/RichTextView.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/a1pamys/RichTextView.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.0'
   s.source_files = 'Source/*.swift', 'Source/Text Parsing/*.swift', 'Source/Constants/*.swift', 'Source/Extensions/*.swift', 'Source/View Generators/*.swift', 'Source/Delegates/*.swift'
