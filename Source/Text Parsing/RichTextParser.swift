@@ -216,6 +216,9 @@ class RichTextParser {
             return (mutableAttributedString.trimmingTrailingNewlinesAndWhitespaces(), [ParsingError.attributedTextGeneration(text: inputString)])
         }
         let parsedMutableAttributedString = NSMutableAttributedString(attributedString: parsedHTMLAttributedString)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        parsedMutableAttributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, parsedMutableAttributedString.length))
         let finalOutputString = self.addCustomStylingToBulletPointsIfNecessary(parsedMutableAttributedString)
         return (finalOutputString, nil)
     }
