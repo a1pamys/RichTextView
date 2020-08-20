@@ -72,6 +72,10 @@ public class RichTextView: UIView {
 
     // MARK: - Helpers
 
+    public func updateTextColor(_ textColor: UIColor) {
+        self.textColor = textColor
+    }
+    
     public func update(input: String? = nil,
                        latexParser: LatexParserProtocol? = nil,
                        font: UIFont? = nil,
